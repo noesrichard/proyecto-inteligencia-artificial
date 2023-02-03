@@ -8,7 +8,7 @@ warning("all", "off");
 % subplot(1,2,1); 
 % preview(cam); 
 
-img_path = 'images\yo2.jpg';
+img_path = 'images\yo.jpg';
 
 img = imread(img_path);
 img(end:1024,:) = 255; 
