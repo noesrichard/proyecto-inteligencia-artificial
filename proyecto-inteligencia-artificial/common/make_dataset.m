@@ -18,7 +18,7 @@ function observations = make_dataset(data_directory, save_path_dataset, save_pat
     
     end
     
-    T = table(labels, numeric_labels); 
+    labels = table(labels, numeric_labels); 
     delete(fullfile(save_path_dataset)); 
     delete(fullfile(save_path_labels)); 
     xlswrite(save_path_dataset,observations);

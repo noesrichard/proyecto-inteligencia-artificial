@@ -4,8 +4,9 @@ function [image, modified_image, gray_image, bw_image] = preprocess_image(image,
         
     elseif crop == 1024
         modified_image = image;
-        modified_image(end:1024,:) = 0; 
-        modified_image = modified_image(:,1:1024,:);
+        modified_image(end:1024,:,:) = 0; 
+        modified_image(:,end:1024,:) = 0; 
+        modified_image = modified_image(1:1024,1:1024,:);
     else
         [rows, columns, ~] = size(image); 
         rows = round(rows/2)-256; 

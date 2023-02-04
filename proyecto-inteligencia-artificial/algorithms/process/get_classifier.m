@@ -1,5 +1,5 @@
 function classifier = get_classifier(algo) 
- classifier = 'algorithms\knn\knnClassifier.mat'; 
+    classifier = 'algorithms\knn\knnClassifier.mat'; 
     
     switch algo
         case 'knn'
