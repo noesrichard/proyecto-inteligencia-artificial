@@ -1,26 +1,26 @@
-function predictions = predict_and_draw_quads(image, boxes, coords, algo)
+function predictions = predict_and_draw_quads(image, boxes, algo)
     imshow(image);
     hold on
-    predictions = predict(image, boxes, coords, algo); 
+    predictions = predict(image, boxes, algo); 
     hold off
 end
 
 
-function  predictions = predict(image, boxes, coords, algo)
+function  predictions = predict(image, boxes, algo)
 
     predictions = [];
 
-    for index = 1: length(boxes)
+    for i = 1: length(boxes)
     
-        sub_img = get_sub_image(image,coords(index,:));
+        sub_img = imcrop(image, boxes(i,:));
         
         prediction = predict_matrix_image(sub_img,algo);
     
         prediction = convertCharsToStrings(prediction);
         
-        draw_prediction(prediction, boxes(index,:));
+        draw_prediction(prediction, boxes(i,:));
        
-        predictions = [predictions; index prediction];
+        predictions = [predictions; i prediction];
     end
 
 end

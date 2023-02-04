@@ -1,10 +1,10 @@
+%% Quadtree
 clc; clear; close all; 
 
-
+warning("off", "all"); 
 webcamlist
 
-cam = webcam('Integrated');  
-preview(cam); 
+cam = webcam('Integrated');   
 
 while true
     img = snapshot(cam); 
@@ -12,7 +12,29 @@ while true
     resize = 512; 
     dims = [512 256 128 64 32]; 
     tic
-        [unique_predictions, predictions] = predict_quadtree(img,resize,threshold, dims, 'ann', true);
+    try
+        predictions = predict_quadtree(img,resize,threshold, dims, 'ann', true);
+    catch
+    end
+    toc
+    
+end
+
+
+%% RegionProps
+
+clc; clear; close all; 
+
+warning("off", "all"); 
+webcamlist
+
+cam = webcam('Integrated');  
+
+while true
+    img = snapshot(cam); 
+ 
+    tic
+       predictions = predict_regionprops(img,'ann',false, 0.15);
     toc
     
 end

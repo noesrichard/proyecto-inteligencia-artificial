@@ -7,28 +7,28 @@ function predictions = app_predict_quadtree(image, resize, threshold, dims,algo,
     imshow(modified_image, 'Parent', component);
     if length(boxes) > 4
         hold(component,'on'); 
-        predictions = predict(modified_image, boxes, coords, algo, component); 
+        predictions = predict(modified_image, boxes, algo, component); 
         hold(component,'off');
         title(component,'BoundingBox')
     end
 end
 
 
-function  predictions = predict(image, boxes, coords, algo, component)
+function  predictions = predict(image, boxes, algo, component)
 
     predictions = [];
 
-    for index = 1: length(boxes)
+    for i = 1: length(boxes)
     
-        sub_img = get_sub_image(image,coords(index,:));
+        sub_img = imcrop(image, boxes(i,:));
         
         prediction = predict_matrix_image(sub_img,algo);
     
         prediction = convertCharsToStrings(prediction);
         
-        draw_prediction(prediction, boxes(index,:), component);
+        draw_prediction(prediction, boxes(i,:), component);
        
-        predictions = [predictions; index prediction];
+        predictions = [predictions; i prediction];
     end
 
 end

@@ -17,5 +17,5 @@ function [image, modified_image, gray_image, bw_image] = preprocess_image(image,
         modified_image(:,:,3) = image(rows:rows+511, columns:columns+511,3); 
     end
     gray_image = rgb2gray(modified_image);
-    bw_image = im2bw(gray_image);
+    bw_image = im2bw(gray_image,0.4);
 end
