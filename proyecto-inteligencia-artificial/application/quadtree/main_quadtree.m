@@ -9,5 +9,5 @@ threshold = 0.5;
 dims = [512 256 128 64]; 
 resize = 512; 
 tic
-[unique_predictions, predictions] = predict_quadtree(img,rresize,threshold, dims, 'ann', true);
+[unique_predictions, predictions] = predict_quadtree(img,resize,threshold, dims, 'ann', true);
 toc

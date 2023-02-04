@@ -36,7 +36,7 @@ end
 function draw_prediction(prediction, box, component)
     color = set_color(prediction);
     text(component, 'Position',[box(:,1) box(:,2)+10],'String',prediction, 'Color',color);
-    rectangle(component, 'position', box(:,:), 'EdgeColor','r','LineWidth',2);
+    rectangle(component, 'position', box(:,:), 'EdgeColor','r');
 end
 
 function color = set_color(prediction)
