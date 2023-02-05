@@ -4,7 +4,7 @@ clc; clear; close all;
 warning("off", "all"); 
 webcamlist
 
-cam = webcam('Integrated');   
+cam = webcam('USB');   
 
 while true
     img = snapshot(cam); 

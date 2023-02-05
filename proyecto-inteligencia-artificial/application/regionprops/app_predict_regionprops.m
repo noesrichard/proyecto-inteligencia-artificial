@@ -1,15 +1,33 @@
-function predictions = app_predict_quadtree(image, resize, threshold, dims,algo, component)
-
-    [image, modified_image, gray_image, bw_image] = preprocess_image(image, resize);
-
-    [S, boxes, coords] = quadtree(gray_image,threshold,dims); 
-
-    imshow(modified_image, 'Parent', component);
-    if length(boxes) > 4
-        hold(component,'on'); 
-        predictions = predict(modified_image, boxes, algo, component); 
-        hold(component,'off');
+function predictions = app_predict_regionprops(image, algo,negative, level, component)
+    gray_image = rgb2gray(image);
+    bw_image = im2bw(gray_image,level);
+    
+    if negative
+        bw_image = ~bw_image;
     end
+    props = regionprops(bw_image, 'Area', 'BoundingBox');
+    
+    props = struct2table(props); 
+    props = sortrows(props, 'Area','descend'); 
+    props = table2struct(props); 
+    
+    predictions = []; 
+    boxes = [];
+    i = 1; 
+    try
+        imshow(image, 'Parent', component);
+        hold(component,'on'); 
+        while props(i).Area > 100
+            box = props(i).BoundingBox; 
+            boxes = [boxes; box(1,1) box(1,2) box(1,3) box(1,4)];
+            i = i + 1; 
+        end
+        predictions = predict(image,boxes,algo, component);
+        hold(component,'off');
+    catch 
+        
+    end
+
 end
 
 
