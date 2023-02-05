@@ -4,9 +4,9 @@ warning("off", "all");
 
 %% Select img
 
-img = imread('images\person.jpg'); 
+img = imread('images\zoro.jpg'); 
 threshold = 0.5;
-dims = [512 256 128 64]; 
+dims = [512 256 128 64 32]; 
 resize = 512; 
 tic
 

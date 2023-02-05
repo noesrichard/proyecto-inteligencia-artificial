@@ -4,19 +4,20 @@ clc; clear; close all;
 warning("off", "all"); 
 webcamlist
 
-cam = webcam('USB');   
+cam = webcam('Integrated');   
 
 while true
     img = snapshot(cam); 
     threshold = 0.5;
     resize = 512; 
-    dims = [512 256 128 64 32]; 
+    dims = [64 32 16]; 
     tic
     try
-        predictions = predict_quadtree(img,resize,threshold, dims, 'ann', true);
+        predictions = predict_quadtree(img,resize,threshold, dims, 'knn', true);
     catch
     end
     toc
+    pause(3);
     
 end
 
@@ -34,7 +35,7 @@ while true
     img = snapshot(cam); 
  
     tic
-       predictions = predict_regionprops(img,'ann',false, 0.15);
+       predictions = predict_regionprops(img,'ann',true, 0.15);
     toc
     
 end
