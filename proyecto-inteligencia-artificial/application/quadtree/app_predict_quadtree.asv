@@ -11,8 +11,8 @@ function predictions = app_predict_quadtree(img, threshold, dims,algo, component
         end_v = 512 - 1; 
         new_img(:,:,1) = img(rows:rows+end_v, columns:columns+end_v,1); 
         new_img(:,:,2) = img(rows:rows+end_v, columns:columns+end_v,2);
-        new_img(:,:,3) = img(rows:rows+end_v, columns:columns+end_v,3);
-        predictions = centered(new_img,threshold, dims, algo, component); 
+        img(:,:,3) = img(rows:rows+end_v, columns:columns+end_v,3);
+        predictions = centered(img,threshold, dims, algo, component); 
     end
 end
 

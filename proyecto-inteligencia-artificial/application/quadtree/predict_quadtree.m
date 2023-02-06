@@ -1,4 +1,37 @@
-function  predictions = predict_quadtree(img, resize, threshold, dims,algo, draw)
+function  predictions = predict_quadtree(img,  threshold, dims,algo, draw, multi_boxes_flag)
+
+
+    if multi_boxes_flag
+        predictions = multi_boxes(img, threshold, dims, algo, draw);
+    else
+        [rows, columns, ~] = size(img); 
+          
+        rows = round(rows/2)-(512/2); 
+        columns = round(columns/2)-(512/2); 
+        end_v = 512 - 1; 
+        new_img(:,:,1) = img(rows:rows+end_v, columns:columns+end_v,1); 
+        new_img(:,:,2) = img(rows:rows+end_v, columns:columns+end_v,2);
+        new_img(:,:,3) = img(rows:rows+end_v, columns:columns+end_v,3);
+        predictions = centered(new_img,threshold, dims, algo, draw); 
+    end
+
+
+end
+
+function predictions = centered(image, threshold, dims, algo, draw)
+    gray_image = rgb2gray(image); 
+    [S, boxes, coords] = quadtree(gray_image,threshold,dims); 
+    if length(boxes) > 4
+        if draw
+            predictions = draw_predictions(image, boxes, algo); 
+        else
+            predictions = predict_quads(image, boxes, algo);
+        end
+    end
+
+end
+
+function predictions = multi_boxes(img, threshold, dims, algo, draw)
 
     [image, gr1, gr2, gr3, gr4] = preprocess_image(img, 512);
     [rows, columns, ~] = size(image); 
@@ -46,6 +79,5 @@ function  predictions = predict_quadtree(img, resize, threshold, dims,algo, draw
     end
     hold off
   
-
 end
 
