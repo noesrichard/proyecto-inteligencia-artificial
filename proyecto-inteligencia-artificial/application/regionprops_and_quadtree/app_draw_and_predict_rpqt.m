@@ -1,17 +1,9 @@
-function predictions = app_predict_quadtree(image, resize, threshold, dims,algo, component)
-
-    [image, modified_image, gray_image, bw_image] = preprocess_image(image, resize);
-
-    [S, boxes, coords] = quadtree(gray_image,threshold,dims); 
-
-    imshow(modified_image, 'Parent', component);
-    if length(boxes) > 4
-        hold(component,'on'); 
-        predictions = predict(modified_image, boxes, algo, component); 
-        hold(component,'off');
-    end
+function predictions = app_draw_and_predict_rpqt(image, boxes, algo, component)
+%     imshow(image);
+%     hold on
+    predictions = predict(image, boxes, algo, component); 
+%     hold off
 end
-
 
 function  predictions = predict(image, boxes, algo, component)
 

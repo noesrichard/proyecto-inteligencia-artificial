@@ -1,5 +1,5 @@
 
-function predictions = predict_regionprops_quadtree(img, algo, quadtree_threshold, negative)
+function predictions = app_predict_regionprops_quadtree(img, component, algo, quadtree_threshold, negative)
 tic
 resize_factor = 0.25;
 resized_img = imresize(img, resize_factor);
@@ -17,14 +17,14 @@ boxes = get_boxes(props);
 
 predictions = [];
 quadtree_boxes = [];
-subplot(2,1,1); 
-imshow(img);
-hold on
+
+imshow(img, 'Parent', component);
+hold(component,'on');
 
 for i = 1: size(boxes,1)
     
     drawing_boxes = boxes(:,:)/resize_factor; 
-    rectangle('Position',drawing_boxes(i,:),'EdgeColor', 'r' );
+    rectangle(component, 'Position',drawing_boxes(i,:),'EdgeColor', 'r' );
 
     sub_img = imcrop(gray_img, boxes(i,:));
 
@@ -40,11 +40,9 @@ for i = 1: size(boxes,1)
     quadtree_boxes = [quadtree_boxes; new_boxes];
 end
 quadtree_boxes = quadtree_boxes/resize_factor; 
-h = predict_and_draw_quads_rp(img, quadtree_boxes, algo);
+h = app_draw_and_predict_rpqt(img, quadtree_boxes, algo, component);
 predictions = [predictions; h];
-hold off
-subplot(2,1,2)
-imshow(bw_img); 
+hold(component,'off');
 toc
 end
 

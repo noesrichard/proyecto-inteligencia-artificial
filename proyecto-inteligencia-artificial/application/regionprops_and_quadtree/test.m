@@ -1,8 +1,9 @@
 clc; clear; close all; 
-img = imread('images\3.jpg'); 
+img = imread('images\zoro.jpg'); 
 
 
-predictions = predict_regionprops_quadtree(img,'ann', true); 
+predictions = predict_regionprops_quadtree(img,'ann',0.5, false); 
+found = unique(predictions(:,2)); 
 
 
 %% Quadtree
@@ -15,14 +16,13 @@ cam = webcam('Integrated');
 
 while true
     img = snapshot(cam); 
-    threshold = 0.5;
-    resize = 1; 
-    dims = [64 32]; 
+    threshold = 0.5; 
+    negative = false; 
     tic
     try
-       predictions = predict_regionprops_quadtree(img,'ann', true); 
+       predictions = predict_regionprops_quadtree(img,'ann', threshold, negative); 
+       found = unique(predictions(:,2)); 
     catch
     end
     toc
-   
 end
