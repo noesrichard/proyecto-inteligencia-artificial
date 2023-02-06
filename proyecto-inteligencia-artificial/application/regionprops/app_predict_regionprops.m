@@ -1,10 +1,12 @@
-function predictions = app_predict_regionprops(image, algo,negative, level, component)
+function predictions = app_predict_regionprops(image, algo,negative, component, bw_component)
     gray_image = rgb2gray(image);
-    bw_image = im2bw(gray_image,level);
+    bw_image = imbinarize(gray_image);
     
     if negative
         bw_image = ~bw_image;
     end
+
+    imshow(bw_image, 'Parent', bw_component)
     props = regionprops(bw_image, 'Area', 'BoundingBox');
     
     props = struct2table(props); 
