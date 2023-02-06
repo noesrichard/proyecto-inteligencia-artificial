@@ -1,8 +1,8 @@
-function predictions = predict_and_draw_quads(image, boxes, algo)
-    imshow(image);
-    hold on
+function predictions = draw_predictions(image, boxes, algo)
+%     imshow(image);
+%     hold on
     predictions = predict(image, boxes, algo); 
-    hold off
+%     hold off
 end
 
 
@@ -10,7 +10,7 @@ function  predictions = predict(image, boxes, algo)
 
     predictions = [];
 
-    for i = 1: length(boxes)
+    for i = 1: size(boxes,1)
     
         sub_img = imcrop(image, boxes(i,:));
         

@@ -20,7 +20,7 @@ function predictions = predict_regionprops(image, algo,negative, level)
             boxes = [boxes; box(1,1) box(1,2) box(1,3) box(1,4)];
             i = i + 1; 
         end
-        predictions = predict_and_draw_quads(image,boxes,algo);
+        predictions = draw_predictions(image,boxes,algo);
     catch 
         
     end

@@ -13,12 +13,10 @@ while true
     dims = [64 32]; 
     tic
     try
-        predictions = predict_quadtree(img,resize,threshold, dims, 'knn', true);
+        predictions = predict_quadtree(img,resize,threshold, dims, 'ann', true);
     catch
     end
     toc
-    pause(3);
-    
 end
 
 

@@ -8,19 +8,22 @@ gray_img = rgb2gray(resized_img);
 
 bw_img = imbinarize(gray_img);
 
-imshow(bw_img, 'Parent', bw_component); 
-
 if negative
     bw_img = ~bw_img;
 end
 
+imshow(bw_img, 'Parent', bw_component); 
+
 props = regionprops(bw_img,'Area', 'BoundingBox');
+
 boxes = get_boxes(props);
 
 predictions = [];
+
 quadtree_boxes = [];
 
 imshow(img, 'Parent', component);
+
 hold(component,'on');
 
 for i = 1: size(boxes,1)
@@ -41,10 +44,15 @@ for i = 1: size(boxes,1)
 
     quadtree_boxes = [quadtree_boxes; new_boxes];
 end
+
 quadtree_boxes = quadtree_boxes/resize_factor; 
-h = app_draw_and_predict_rpqt(img, quadtree_boxes, algo, component);
+
+h = app_predict(img, quadtree_boxes, algo, component);
+
 predictions = [predictions; h];
+
 hold(component,'off');
+
 toc
 end
 

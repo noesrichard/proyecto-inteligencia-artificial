@@ -24,7 +24,7 @@ function predictions = app_predict_regionprops(image, algo,negative, component, 
             boxes = [boxes; box(1,1) box(1,2) box(1,3) box(1,4)];
             i = i + 1; 
         end
-        predictions = predict(image,boxes,algo, component);
+        predictions = app_predict(image,boxes,algo, component);
         hold(component,'off');
     catch 
         
@@ -33,35 +33,4 @@ function predictions = app_predict_regionprops(image, algo,negative, component, 
 end
 
 
-function  predictions = predict(image, boxes, algo, component)
 
-    predictions = [];
-
-    for i = 1: length(boxes)
-    
-        sub_img = imcrop(image, boxes(i,:));
-        
-        prediction = predict_matrix_image(sub_img,algo);
-    
-        prediction = convertCharsToStrings(prediction);
-        
-        draw_prediction(prediction, boxes(i,:), component);
-       
-        predictions = [predictions; i prediction];
-    end
-
-end
-
-function draw_prediction(prediction, box, component)
-    color = set_color(prediction);
-    text(component, 'Position',[box(:,1) box(:,2)+10],'String',prediction, 'Color',color);
-    rectangle(component, 'position', box(:,:), 'EdgeColor','r');
-end
-
-function color = set_color(prediction)
-    color = 'k';
-    if (contains(prediction, 'black') || contains(prediction, 'grey') ...
-           || contains(prediction, 'blue') )
-        color = 'w';
-    end
-end

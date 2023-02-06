@@ -5,7 +5,7 @@ function  predictions = predict_quadtree(img, resize, threshold, dims,algo, draw
     [S, boxes, coords] = quadtree(gray_image,threshold,dims); 
     if length(boxes) > 4
         if draw
-            predictions = predict_and_draw_quads(modified_image, boxes, algo); 
+            predictions = draw_predictions(modified_image, boxes, algo); 
         else
             predictions = predict_quads(modified_image, boxes, algo);
         end

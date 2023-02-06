@@ -7,41 +7,12 @@ function predictions = app_predict_quadtree(image, resize, threshold, dims,algo,
     imshow(modified_image, 'Parent', component);
     if length(boxes) > 4
         hold(component,'on'); 
-        predictions = predict(modified_image, boxes, algo, component); 
+        predictions = app_predict(modified_image, boxes, algo, component); 
         hold(component,'off');
     end
 end
 
 
-function  predictions = predict(image, boxes, algo, component)
 
-    predictions = [];
 
-    for i = 1: size(boxes,1)
-    
-        sub_img = imcrop(image, boxes(i,:));
-        
-        prediction = predict_matrix_image(sub_img,algo);
-    
-        prediction = convertCharsToStrings(prediction);
-        
-        draw_prediction(prediction, boxes(i,:), component);
-       
-        predictions = [predictions; i prediction];
-    end
 
-end
-
-function draw_prediction(prediction, box, component)
-    color = set_color(prediction);
-    text(component, 'Position',[box(:,1) box(:,2)+10],'String',prediction, 'Color',color);
-    rectangle(component, 'position', box(:,:), 'EdgeColor','r');
-end
-
-function color = set_color(prediction)
-    color = 'k';
-    if (contains(prediction, 'black') || contains(prediction, 'grey') ...
-           || contains(prediction, 'blue') )
-        color = 'w';
-    end
-end
