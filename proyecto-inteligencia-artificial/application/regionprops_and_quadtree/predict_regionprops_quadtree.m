@@ -17,7 +17,8 @@ boxes = get_boxes(props);
 
 predictions = [];
 quadtree_boxes = [];
-subplot(2,1,1); 
+% subplot(2,1,1); 
+figure; 
 imshow(img);
 hold on
 
@@ -43,7 +44,8 @@ quadtree_boxes = quadtree_boxes/resize_factor;
 h = draw_predictions(img, quadtree_boxes, algo);
 predictions = [predictions; h];
 hold off
-subplot(2,1,2)
+% subplot(2,1,2)
+figure; 
 imshow(bw_img); 
 toc
 end

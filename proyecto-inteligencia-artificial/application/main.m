@@ -59,3 +59,13 @@ while true
     toc
 end
 
+%% Testing unica imagen
+
+img = imread('images\person.jpg'); 
+
+predictions_qt = predict_quadtree(img,0.3,0.5,[512 256 128 64 32], 'ann', true); 
+
+predictions_rp = predict_regionprops(img,'ann',true,0.15); 
+
+predictions = predict_regionprops_quadtree(img,'ann', 0.5, false); 
+
