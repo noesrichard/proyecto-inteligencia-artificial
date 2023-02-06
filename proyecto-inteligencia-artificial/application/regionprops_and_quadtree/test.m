@@ -6,7 +6,7 @@ predictions = predict_regionprops_quadtree(img,'ann',0.5, false);
 found = unique(predictions(:,2)); 
 
 
-%% Quadtree
+%% Ambos
 clc; clear; close all; 
 
 warning("off", "all"); 

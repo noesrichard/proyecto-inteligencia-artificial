@@ -1,5 +1,5 @@
 
-function predictions = app_predict_regionprops_quadtree(img, component, algo, quadtree_threshold, negative)
+function predictions = app_predict_regionprops_quadtree(img, algo, quadtree_threshold, negative,  component, bw_component)
 tic
 resize_factor = 0.25;
 resized_img = imresize(img, resize_factor);
@@ -7,6 +7,8 @@ resized_img = imresize(img, resize_factor);
 gray_img = rgb2gray(resized_img);
 
 bw_img = imbinarize(gray_img);
+
+imshow(bw_img, 'Parent', bw_component); 
 
 if negative
     bw_img = ~bw_img;
