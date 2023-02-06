@@ -40,7 +40,7 @@ for i = 1: size(boxes,1)
     quadtree_boxes = [quadtree_boxes; new_boxes];
 end
 quadtree_boxes = quadtree_boxes/resize_factor; 
-h = both_draw_predictions(img, quadtree_boxes, algo);
+h = draw_predictions(img, quadtree_boxes, algo);
 predictions = [predictions; h];
 hold off
 subplot(2,1,2)
