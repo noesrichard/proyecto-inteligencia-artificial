@@ -40,11 +40,24 @@ while true
     
 end
 
-%%
+%% Ambos
+clc; clear; close all; 
 
-img = imread('images\zoro.jpg'); 
-res = imresize(img, 0.3); 
-subplot(1,2,1);
-imshow(img); 
-subplot(1,2,2); 
-imshow(res); 
+warning("off", "all"); 
+webcamlist
+
+cam = webcam('Integrated');   
+
+while true
+    img = snapshot(cam); 
+    threshold = 0.5; 
+    negative = false; 
+    tic
+    try
+       predictions = predict_regionprops_quadtree(img,'ann', threshold, negative); 
+       found = unique(predictions(:,2)); 
+    catch
+    end
+    toc
+end
+

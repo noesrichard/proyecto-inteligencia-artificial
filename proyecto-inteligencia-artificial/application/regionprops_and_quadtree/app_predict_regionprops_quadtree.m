@@ -7,6 +7,7 @@ resized_img = imresize(img, resize_factor);
 gray_img = rgb2gray(resized_img);
 
 bw_img = imbinarize(gray_img);
+
 imshow(bw_img, 'Parent', bw_component); 
 
 if negative
