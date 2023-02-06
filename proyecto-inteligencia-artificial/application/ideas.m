@@ -7,9 +7,12 @@ clc; clear; close all;
 
 
 img = imread('images\yo.jpg');
-img = imresize(img, 0.2);
+
+img = imresize(img, 0.25);
+
 gray_img = rgb2gray(img);
 bin_img = imbinarize(gray_img);
+bin_img = im2bw(gray_img); 
 x = edge(gray_img, 'canny');
 figure;
 imshow(bin_img);
@@ -19,11 +22,12 @@ mask = bwconvhull(x,"objects");
 
 %%
 bi=gray_img<255;
+bi = ~bin_img; 
 % subplot(2,2,1);
 imshow(bi);
 
-[a,b]=bwlabel(bi,8);
-disp(b);
+% [a,b]=bwlabel(bi,8);
+% disp(b);
 detected_edge=edge(gray_img,'canny', 0.2);
 % subplot(2,2,2);
 imshow(detected_edge);
@@ -118,13 +122,13 @@ treshold = 0.94;
 
 %% a
 
-% imshow(img);
-% hold on
-% for i=1: length(props)
-%     rectangle('position', props(i).BoundingBox, 'EdgeColor','r');
-% end
-% hold off
-% title('BoudingBox')
+imshow(img);
+hold on
+for i=1: length(props)
+    rectangle('position', props(i).BoundingBox, 'EdgeColor','r');
+end
+hold off
+title('BoudingBox')
 
 % bw =
 % bw = bwareaopen(bw,30);
