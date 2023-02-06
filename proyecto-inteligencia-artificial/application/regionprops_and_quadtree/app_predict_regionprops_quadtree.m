@@ -1,5 +1,5 @@
 
-function predictions = app_predict_regionprops_quadtree(img, algo, quadtree_threshold, negative,  component, bw_component)
+function predictions = app_predict_regionprops_quadtree(img, algo, quadtree_threshold, negative, multi_boxes,  component, bw_component)
 tic
 resize_factor = 0.25;
 resized_img = imresize(img, resize_factor);
@@ -15,8 +15,11 @@ end
 imshow(bw_img, 'Parent', bw_component); 
 
 props = regionprops(bw_img,'Area', 'BoundingBox');
-
-boxes = get_boxes(props);
+if multi_boxes
+    boxes = get_multi_boxes(props);
+else
+    boxes = get_boxes(props);
+end
 
 predictions = [];
 
@@ -56,6 +59,44 @@ hold(component,'off');
 toc
 end
 
+
+function boxes = get_multi_boxes(props)
+    boxes = [];
+    for i = 1 : length(props)
+        box = props(i).BoundingBox;
+        width = box(3);
+        height = box(4);
+        row = box(1); 
+        column = box(2); 
+
+        min = width;
+    
+        if height < width
+            min = height;
+        end
+    
+        sizes = [16 32 64 128 256 512];
+    
+        new = 0;
+        for s = sizes
+            if s < min
+                new = s;
+            end
+        end
+    
+        dif_columns = (box(4) - new)/2;
+        dif_rows = (box(3) - new)/2;
+    
+        bx1 = [row column new new]; 
+        bx2 = [row-new+width column new new]; 
+        bx3 = [row-new+width column-new+height new new]; 
+        bx4 = [row column-new+height new new]; 
+
+        boxes = [boxes; bx1; bx2; bx3; bx4];
+    end
+    indices = boxes(:,3)==0;
+    boxes(indices,:) = [];
+end
 
 function boxes = get_boxes(props)
     boxes = [];

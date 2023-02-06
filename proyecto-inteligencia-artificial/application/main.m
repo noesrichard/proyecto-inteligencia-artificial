@@ -9,8 +9,8 @@ cam = webcam('Integrated');
 while true
     img = snapshot(cam); 
     threshold = 0.5;
-    resize = 1; 
-    dims = [64 32]; 
+    resize = 512; 
+    dims = [512 256 128 64 32]; 
     tic
     try
         predictions = predict_quadtree(img,resize,threshold, dims, 'ann', true);
@@ -50,9 +50,10 @@ while true
     img = snapshot(cam); 
     threshold = 0.5; 
     negative = false; 
+    multi_boxes = true; 
     tic
     try
-       predictions = predict_regionprops_quadtree(img,'ann', threshold, negative); 
+       predictions = predict_regionprops_quadtree(img,'ann', threshold, negative, multi_boxes); 
        found = unique(predictions(:,2)); 
     catch
     end
@@ -63,9 +64,9 @@ end
 
 img = imread('images\person.jpg'); 
 
-predictions_qt = predict_quadtree(img,0.3,0.5,[512 256 128 64 32], 'ann', true); 
+% predictions_qt = predict_quadtree(img,512,0.5,[512 256 128 64 32 16], 'ann', true); 
+% 
+% predictions_rp = predict_regionprops(img,'ann',true,0.15); 
 
-predictions_rp = predict_regionprops(img,'ann',true,0.15); 
-
-predictions = predict_regionprops_quadtree(img,'ann', 0.5, false); 
+predictions = predict_regionprops_quadtree(img,'ann', 0.8, true,  true); 
 
