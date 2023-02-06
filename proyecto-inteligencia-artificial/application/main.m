@@ -9,8 +9,8 @@ cam = webcam('Integrated');
 while true
     img = snapshot(cam); 
     threshold = 0.5;
-    resize = 512; 
-    dims = [64 32 16]; 
+    resize = 1; 
+    dims = [64 32]; 
     tic
     try
         predictions = predict_quadtree(img,resize,threshold, dims, 'knn', true);
@@ -39,3 +39,12 @@ while true
     toc
     
 end
+
+%%
+
+img = imread('images\zoro.jpg'); 
+res = imresize(img, 0.3); 
+subplot(1,2,1);
+imshow(img); 
+subplot(1,2,2); 
+imshow(res); 
